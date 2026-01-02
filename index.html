@@ -1,0 +1,1561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudarsana Nerella</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-bg: #111111;
+            --color-bg-alt: #1a1a1a;
+            --color-text: #e5e5e5;
+            --color-text-muted: #888888;
+            --color-text-faint: #555555;
+            --color-accent: #e5e5e5;
+            --color-border: #333333;
+            --font-serif: 'EB Garamond', Georgia, serif;
+            --font-sans: 'DM Sans', -apple-system, sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --max-width: 1400px;
+            --spacing-lg: 120px;
+            --spacing-md: 60px;
+            --spacing-sm: 30px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        ::selection {
+            background: var(--color-text);
+            color: var(--color-bg);
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        a:hover {
+            opacity: 0.7;
+        }
+
+        /* Layout */
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 var(--spacing-sm);
+        }
+
+        /* ============================================
+           ANIMATIONS
+           ============================================ */
+        
+        /* Base animation states */
+        .animate-fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
+                        transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .animate-fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .animate-fade-left {
+            opacity: 0;
+            transform: translateX(-40px);
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
+                        transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .animate-fade-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .animate-fade-right {
+            opacity: 0;
+            transform: translateX(40px);
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
+                        transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .animate-fade-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .animate-scale {
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), 
+                        transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .animate-scale.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Stagger delays */
+        .stagger-1 { transition-delay: 0.1s; }
+        .stagger-2 { transition-delay: 0.2s; }
+        .stagger-3 { transition-delay: 0.3s; }
+        .stagger-4 { transition-delay: 0.4s; }
+        .stagger-5 { transition-delay: 0.5s; }
+        .stagger-6 { transition-delay: 0.6s; }
+
+        /* Hero specific animations */
+        .hero-animate {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .hero-animate.loaded {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1), 
+                        transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Letter animation - character by character feel */
+        .letter-animate {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(20px) rotateX(-20deg);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .letter-animate.visible {
+            opacity: 1;
+            transform: translateY(0) rotateX(0);
+        }
+
+        /* Floating particles background */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--color-text-faint);
+            border-radius: 50%;
+            opacity: 0.3;
+        }
+
+        /* Line drawing animation */
+        .line-draw {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            transition: stroke-dashoffset 2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .line-draw.visible {
+            stroke-dashoffset: 0;
+        }
+
+        /* ============================================
+           TOP BANNER
+           ============================================ */
+        .top-banner {
+            background: var(--color-text);
+            color: var(--color-bg);
+            padding: 12px var(--spacing-sm);
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            text-align: center;
+            letter-spacing: 0.02em;
+            transform: translateY(-100%);
+            animation: slideDown 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
+        }
+
+        @keyframes slideDown {
+            to { transform: translateY(0); }
+        }
+
+        .top-banner a {
+            text-decoration: underline;
+        }
+
+        /* ============================================
+           HEADER
+           ============================================ */
+        .site-header {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .site-version {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--color-text-muted);
+        }
+
+        .site-version span {
+            margin-right: 8px;
+            display: inline-block;
+            animation: spin 4s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .back-link {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--color-text-muted);
+            position: relative;
+        }
+
+        .back-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--color-text);
+            transition: width 0.3s ease;
+        }
+
+        .back-link:hover::after {
+            width: 100%;
+        }
+
+        .back-link:hover {
+            opacity: 1;
+        }
+
+        /* ============================================
+           HERO
+           ============================================ */
+        .hero {
+            padding: var(--spacing-lg) 0;
+            border-bottom: 1px solid var(--color-border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-intro {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--color-text-muted);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .hero-title {
+            font-family: var(--font-serif);
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 400;
+            line-height: 1.15;
+            margin-bottom: var(--spacing-sm);
+            max-width: 900px;
+        }
+
+        .hero-title .word {
+            display: inline-block;
+            overflow: hidden;
+        }
+
+        .hero-title .word span {
+            display: inline-block;
+            transform: translateY(100%);
+            animation: revealWord 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes revealWord {
+            to { transform: translateY(0); }
+        }
+
+        .hero-subtitle {
+            font-family: var(--font-serif);
+            font-size: 1.35rem;
+            font-weight: 400;
+            color: var(--color-text-muted);
+            max-width: 600px;
+            line-height: 1.5;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .hero-scroll {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--color-text-faint);
+            font-style: italic;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .scroll-line {
+            width: 40px;
+            height: 1px;
+            background: var(--color-text-faint);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scroll-line::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--color-text);
+            animation: scrollLine 2s ease-in-out infinite;
+        }
+
+        @keyframes scrollLine {
+            0%, 100% { left: -100%; }
+            50% { left: 100%; }
+        }
+
+        /* ============================================
+           META BAR
+           ============================================ */
+        .meta-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-sm) 0;
+            border-bottom: 1px solid var(--color-border);
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--color-text-muted);
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .meta-item::before {
+            content: '—';
+        }
+
+        .meta-item:first-child::before {
+            display: none;
+        }
+
+        .now-playing-dot {
+            width: 6px;
+            height: 6px;
+            background: #22c55e;
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.8); }
+        }
+
+        /* ============================================
+           NAVIGATION SECTIONS
+           ============================================ */
+        .nav-sections {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-md);
+            padding: var(--spacing-md) 0;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .nav-group h3 {
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+            color: var(--color-text-muted);
+        }
+
+        .nav-group ul {
+            list-style: none;
+        }
+
+        .nav-group li {
+            margin-bottom: 16px;
+        }
+
+        .nav-group a {
+            display: block;
+            position: relative;
+            padding-left: 0;
+            transition: padding-left 0.3s ease, color 0.3s ease;
+        }
+
+        .nav-group a:hover {
+            padding-left: 12px;
+            opacity: 1;
+        }
+
+        .nav-group a::before {
+            content: '→';
+            position: absolute;
+            left: -20px;
+            opacity: 0;
+            transition: left 0.3s ease, opacity 0.3s ease;
+        }
+
+        .nav-group a:hover::before {
+            left: 0;
+            opacity: 1;
+        }
+
+        .nav-link-title {
+            font-family: var(--font-serif);
+            font-size: 1.25rem;
+            font-weight: 400;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .nav-link-desc {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--color-text-faint);
+        }
+
+        /* ============================================
+           LETTER SECTION
+           ============================================ */
+        .letter-section {
+            padding: var(--spacing-lg) 0;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .section-title {
+            font-family: var(--font-serif);
+            font-size: 1.75rem;
+            font-weight: 400;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .letter-content {
+            max-width: 600px;
+            font-family: var(--font-serif);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            font-style: italic;
+            color: var(--color-text-muted);
+        }
+
+        .letter-content p {
+            margin-bottom: 1.5em;
+        }
+
+        .letter-signature {
+            font-style: normal;
+            margin-top: 2em;
+        }
+
+        /* ============================================
+           ABOUT SECTION
+           ============================================ */
+        .about-section {
+            padding: var(--spacing-lg) 0;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .about-epigraph {
+            font-family: var(--font-serif);
+            font-style: italic;
+            font-size: 1rem;
+            color: var(--color-text-faint);
+            max-width: 500px;
+            margin-bottom: var(--spacing-md);
+            line-height: 1.7;
+            padding-left: 20px;
+            border-left: 2px solid var(--color-border);
+        }
+
+        .about-content {
+            max-width: 650px;
+        }
+
+        .about-content p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 1.5em;
+            color: var(--color-text-muted);
+        }
+
+        .about-content p a {
+            text-decoration: underline;
+            text-decoration-color: var(--color-text-faint);
+            text-underline-offset: 3px;
+            transition: text-decoration-color 0.3s ease;
+        }
+
+        .about-content p a:hover {
+            text-decoration-color: var(--color-text);
+            opacity: 1;
+        }
+
+        .strikethrough {
+            text-decoration: line-through;
+            opacity: 0.5;
+        }
+
+        .about-subsection {
+            margin-top: var(--spacing-md);
+        }
+
+        .about-subsection h3 {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-transform: lowercase;
+            margin-bottom: 12px;
+            color: var(--color-text-faint);
+        }
+
+        .about-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .about-links a {
+            font-size: 0.95rem;
+            color: var(--color-text-muted);
+            position: relative;
+            padding-bottom: 2px;
+        }
+
+        .about-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--color-text);
+            transition: width 0.3s ease;
+        }
+
+        .about-links a:hover::after {
+            width: 100%;
+        }
+
+        .about-links a:hover {
+            opacity: 1;
+        }
+
+        /* ============================================
+           WORKS SECTION
+           ============================================ */
+        .works-section {
+            padding: var(--spacing-lg) 0;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .works-list {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .work-item {
+            padding: var(--spacing-sm) 0;
+            border-bottom: 1px solid var(--color-border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .work-item:last-child {
+            border-bottom: none;
+        }
+
+        .work-item-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .work-title {
+            font-family: var(--font-serif);
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-weight: 400;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+                        font-style 0.2s ease;
+        }
+
+        .work-link {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--color-text-muted);
+            white-space: nowrap;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .work-item:hover .work-title {
+            font-style: italic;
+            transform: translateX(20px);
+        }
+
+        .work-item:hover .work-link {
+            transform: translateX(10px);
+        }
+
+        /* Animated background on hover */
+        .work-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--color-bg-alt), transparent);
+            transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1;
+        }
+
+        .work-item:hover::before {
+            left: 100%;
+        }
+
+        /* Marquee effect on hover */
+        .work-marquee {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            background: var(--color-bg);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            overflow: hidden;
+            z-index: 3;
+        }
+
+        .work-item:hover .work-marquee {
+            opacity: 1;
+        }
+
+        .marquee-inner {
+            display: flex;
+            animation: marquee 8s linear infinite;
+            white-space: nowrap;
+        }
+
+        .marquee-inner span {
+            font-family: var(--font-serif);
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            padding-right: 60px;
+            color: var(--color-text-faint);
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* ============================================
+           ARTICLES SECTION
+           ============================================ */
+        .articles-section {
+            padding: var(--spacing-lg) 0;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .articles-list {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .article-item {
+            padding: var(--spacing-sm) 0;
+            border-bottom: 1px solid var(--color-border);
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 20px;
+            align-items: start;
+            transition: background 0.3s ease, padding-left 0.3s ease;
+        }
+
+        .article-item:last-child {
+            border-bottom: none;
+        }
+
+        .article-item:hover {
+            padding-left: 16px;
+            background: linear-gradient(90deg, var(--color-bg-alt), transparent);
+        }
+
+        .article-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .article-category {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--color-text-faint);
+        }
+
+        .article-tags {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--color-text-faint);
+        }
+
+        .article-title {
+            font-family: var(--font-serif);
+            font-size: 1.35rem;
+            font-weight: 400;
+            margin-bottom: 8px;
+            transition: color 0.3s ease;
+        }
+
+        .article-item:hover .article-title {
+            color: var(--color-text);
+        }
+
+        .article-reading-time {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--color-text-faint);
+        }
+
+        .article-link {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--color-text-muted);
+            align-self: center;
+            transition: transform 0.3s ease;
+        }
+
+        .article-item:hover .article-link {
+            transform: translateX(8px);
+        }
+
+        /* View all link */
+        .view-all {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: var(--spacing-sm);
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--color-text-muted);
+            transition: gap 0.3s ease;
+        }
+
+        .view-all:hover {
+            opacity: 1;
+            gap: 16px;
+        }
+
+        .view-all::after {
+            content: '→';
+            transition: transform 0.3s ease;
+        }
+
+        .view-all:hover::after {
+            transform: translateX(4px);
+        }
+
+        /* ============================================
+           FOOTER
+           ============================================ */
+        .site-footer {
+            padding: var(--spacing-lg) 0 var(--spacing-md);
+        }
+
+        .footer-border-image {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--color-border), transparent);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .footer-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .footer-location {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--color-text-faint);
+        }
+
+        .footer-version {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--color-text-faint);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .footer-section h4 {
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 16px;
+            color: var(--color-text-muted);
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .footer-links a {
+            font-size: 0.9rem;
+            color: var(--color-text-muted);
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            transform: translateX(8px);
+            opacity: 1;
+            color: var(--color-text);
+        }
+
+        .footer-link-desc {
+            display: block;
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--color-text-faint);
+        }
+
+        .footer-elsewhere {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .footer-contact a {
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom {
+            padding-top: var(--spacing-sm);
+            border-top: 1px solid var(--color-border);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--color-text-faint);
+        }
+
+        /* ============================================
+           CURSOR EFFECT
+           ============================================ */
+        .cursor-dot {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: var(--color-text);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            transition: transform 0.15s ease;
+        }
+
+        .cursor-ring {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--color-text);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            opacity: 0.5;
+            transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease, opacity 0.3s ease;
+        }
+
+        .cursor-ring.hover {
+            width: 60px;
+            height: 60px;
+            opacity: 0.8;
+        }
+
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        @media (max-width: 768px) {
+            :root {
+                --spacing-lg: 80px;
+                --spacing-md: 40px;
+            }
+
+            .article-item {
+                grid-template-columns: 1fr;
+            }
+
+            .article-link {
+                align-self: start;
+            }
+
+            .work-item-inner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .footer-top {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .cursor-dot, .cursor-ring {
+                display: none;
+            }
+        }
+
+        /* ============================================
+           PRELOADER
+           ============================================ */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--color-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+
+        .preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .preloader-text {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--color-text-muted);
+            overflow: hidden;
+        }
+
+        .preloader-text span {
+            display: inline-block;
+            animation: loadingBounce 1.4s ease infinite;
+        }
+
+        .preloader-text span:nth-child(2) { animation-delay: 0.1s; }
+        .preloader-text span:nth-child(3) { animation-delay: 0.2s; }
+        .preloader-text span:nth-child(4) { animation-delay: 0.3s; }
+        .preloader-text span:nth-child(5) { animation-delay: 0.4s; }
+        .preloader-text span:nth-child(6) { animation-delay: 0.5s; }
+        .preloader-text span:nth-child(7) { animation-delay: 0.6s; }
+
+        @keyframes loadingBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-text">
+            <span>L</span><span>o</span><span>a</span><span>d</span><span>i</span><span>n</span><span>g</span>
+        </div>
+    </div>
+
+    <!-- Custom cursor -->
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <!-- Floating particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Top banner -->
+    <div class="top-banner">
+        Aerospace engineering meets motorsport. Currently building things at Virginia Tech.
+    </div>
+
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container">
+            <div class="header-inner">
+                <div class="site-version">
+                    <span>✷</span> ver. 01.25
+                    <a href="/">Go Home</a>
+                </div>
+                <a href="/" class="back-link">← Back to home</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <p class="hero-intro hero-animate" style="transition-delay: 0.2s;">(the Personal site & Digital Garage of Sudarsana Nerella)</p>
+            
+            <h1 class="hero-title hero-animate" style="transition-delay: 0.4s;">
+                Aerospace Engineer, Racing Enthusiast, & Builder of Fast Things
+            </h1>
+            
+            <p class="hero-subtitle hero-animate" style="transition-delay: 0.6s;">
+                The personal site and portfolio of Blacksburg-based aerospace engineering graduate student and motorsport enthusiast Sudarsana Nerella.
+            </p>
+
+            <p class="hero-scroll hero-animate" style="transition-delay: 0.8s;">
+                <span class="scroll-line"></span>
+                (Scroll with curiosity and care.)
+            </p>
+        </div>
+    </section>
+
+    <!-- Meta bar -->
+    <div class="container">
+        <div class="meta-bar animate-fade-in">
+            <div class="meta-item">
+                <span class="now-playing-dot"></span>
+                <a href="#">Spectrum Podcast</a>
+            </div>
+            <div class="meta-item">
+                @ N 37° 13' 44" W 80° 25' 23" (Blacksburg, Virginia)
+            </div>
+            <div class="meta-item" id="currentTime">
+                --:-- PM
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation sections -->
+    <div class="container">
+        <nav class="nav-sections">
+            <div class="nav-group animate-fade-in stagger-1">
+                <h3>Garage</h3>
+                <ul>
+                    <li>
+                        <a href="#projects">
+                            <span class="nav-link-title">Projects</span>
+                            <span class="nav-link-desc">— Engineering work and experiments</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#publications">
+                            <span class="nav-link-title">Publications</span>
+                            <span class="nav-link-desc">— Research papers and academic work</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#blog">
+                            <span class="nav-link-title">Blog / Ideas</span>
+                            <span class="nav-link-desc">— Thoughts in progress</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="nav-group animate-fade-in stagger-2">
+                <h3>Meta</h3>
+                <ul>
+                    <li>
+                        <a href="#about">
+                            <span class="nav-link-title">About</span>
+                            <span class="nav-link-desc">— A portrait of the author</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#interests">
+                            <span class="nav-link-title">Interests</span>
+                            <span class="nav-link-desc">— What drives me</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#playlists">
+                            <span class="nav-link-title">Playlists</span>
+                            <span class="nav-link-desc">— Music and podcast</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="nav-group animate-fade-in stagger-3">
+                <h3>Play</h3>
+                <ul>
+                    <li>
+                        <a href="#game">
+                            <span class="nav-link-title">F1 Car Builder</span>
+                            <span class="nav-link-desc">— Interactive game (coming soon)</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Letter section -->
+    <section class="letter-section">
+        <div class="container">
+            <h2 class="section-title animate-fade-in">A brief letter from the garage</h2>
+            
+            <div class="letter-content animate-fade-in stagger-1">
+                <p>dear reader <em>(and in fact, dear friend)</em>,</p>
+                
+                <p>this version of my website represents my attempt at building a digital garage — a place for projects in progress and ideas taking shape; for engineering work to be documented and dreams to find their runway.</p>
+                
+                <p>tread carefully, as the tools<br>may still be out.</p>
+                
+                <p class="letter-signature">
+                    with velocity,<br>
+                    <strong>sudarsana</strong> <em>(from blacksburg)</em>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About section -->
+    <section class="about-section" id="about">
+        <div class="container">
+            <h2 class="section-title animate-fade-in">About the author</h2>
+
+            <p class="about-epigraph animate-fade-in stagger-1">
+                "The racing driver's mind has to have the ability to have amazing anticipation, coordination, and the feeling of speed."<br>
+                — Ayrton Senna
+            </p>
+
+            <div class="about-content">
+                <p class="animate-fade-in stagger-2">
+                    I'm an aerospace engineering graduate student <em>(he/him)</em> currently based in <span class="strikethrough">India</span> Blacksburg, Virginia. I'm pursuing my MS at Virginia Tech, where I work on solid-fuel ramjet combustion and CFD modeling at the Advanced Propulsion and Power Laboratory.
+                </p>
+
+                <p class="animate-fade-in stagger-3">
+                    I'm deeply interested in computational fluid dynamics, hypersonic propulsion, and motorsport engineering. When I'm not running simulations, I'm analyzing F1 telemetry data or dreaming about careers in Formula 1.
+                </p>
+
+                <p class="animate-fade-in stagger-4">
+                    Previously, I led the aerodynamic design for my university's go-karting team, winning the <a href="#">Indian Karting Championship 2021</a>.
+                </p>
+
+                <div class="about-subsection animate-fade-in stagger-5">
+                    <h3>availability</h3>
+                    <p>I'm exploring opportunities in motorsport engineering and F1. Reach out if you're building something fast.</p>
+                </div>
+
+                <div class="about-subsection animate-fade-in stagger-6">
+                    <h3>contact</h3>
+                    <p>I'm most reachable <a href="mailto:hello@example.com">via email</a>. You can also <a href="#">check out my CV</a>, if you're into that sort of thing.</p>
+                </div>
+
+                <div class="about-subsection animate-fade-in">
+                    <h3>elsewhere</h3>
+                    <div class="about-links">
+                        <a href="#">GitHub</a>
+                        <a href="#">LinkedIn</a>
+                        <a href="#">Twitter</a>
+                        <a href="#">Spotify</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Works section -->
+    <section class="works-section" id="projects">
+        <div class="container">
+            <h2 class="section-title animate-fade-in">Selected works</h2>
+
+            <div class="works-list">
+                <a href="#" class="work-item animate-fade-in stagger-1">
+                    <div class="work-item-inner">
+                        <h3 class="work-title">Ramjet Combustion Research</h3>
+                        <span class="work-link">Read the case study →</span>
+                    </div>
+                    <div class="work-marquee">
+                        <div class="marquee-inner">
+                            <span>Ramjet Combustion Research</span>
+                            <span>Ramjet Combustion Research</span>
+                            <span>Ramjet Combustion Research</span>
+                            <span>Ramjet Combustion Research</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="#" class="work-item animate-fade-in stagger-2">
+                    <div class="work-item-inner">
+                        <h3 class="work-title">Go-Kart Aerodynamics</h3>
+                        <span class="work-link">Read the case study →</span>
+                    </div>
+                    <div class="work-marquee">
+                        <div class="marquee-inner">
+                            <span>Go-Kart Aerodynamics</span>
+                            <span>Go-Kart Aerodynamics</span>
+                            <span>Go-Kart Aerodynamics</span>
+                            <span>Go-Kart Aerodynamics</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="#" class="work-item animate-fade-in stagger-3">
+                    <div class="work-item-inner">
+                        <h3 class="work-title">F1 Telemetry Analysis</h3>
+                        <span class="work-link">Read the case study →</span>
+                    </div>
+                    <div class="work-marquee">
+                        <div class="marquee-inner">
+                            <span>F1 Telemetry Analysis</span>
+                            <span>F1 Telemetry Analysis</span>
+                            <span>F1 Telemetry Analysis</span>
+                            <span>F1 Telemetry Analysis</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="#game" class="work-item animate-fade-in stagger-4">
+                    <div class="work-item-inner">
+                        <h3 class="work-title">Build Your F1 Car</h3>
+                        <span class="work-link">Play the game →</span>
+                    </div>
+                    <div class="work-marquee">
+                        <div class="marquee-inner">
+                            <span>Build Your F1 Car</span>
+                            <span>Build Your F1 Car</span>
+                            <span>Build Your F1 Car</span>
+                            <span>Build Your F1 Car</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <a href="#" class="view-all animate-fade-in">View all projects</a>
+        </div>
+    </section>
+
+    <!-- Articles section -->
+    <section class="articles-section" id="blog">
+        <div class="container">
+            <h2 class="section-title animate-fade-in">Articles</h2>
+
+            <div class="articles-list">
+                <a href="#" class="article-item animate-fade-in stagger-1">
+                    <div>
+                        <div class="article-meta">
+                            <span class="article-category">journal</span>
+                            <span class="article-tags">| f1 | engineering | games</span>
+                        </div>
+                        <h3 class="article-title">Why I'm Building an F1 Car Game</h3>
+                        <span class="article-reading-time">5 minute read</span>
+                    </div>
+                    <span class="article-link">Read more →</span>
+                </a>
+
+                <a href="#" class="article-item animate-fade-in stagger-2">
+                    <div>
+                        <div class="article-meta">
+                            <span class="article-category">tutorial</span>
+                            <span class="article-tags">| cfd | openfoam | learning</span>
+                        </div>
+                        <h3 class="article-title">Notes on OpenFOAM for Beginners</h3>
+                        <span class="article-reading-time">8 minute read</span>
+                    </div>
+                    <span class="article-link">Read more →</span>
+                </a>
+
+                <a href="#" class="article-item animate-fade-in stagger-3">
+                    <div>
+                        <div class="article-meta">
+                            <span class="article-category">tutorial</span>
+                            <span class="article-tags">| python | f1 | data</span>
+                        </div>
+                        <h3 class="article-title">Analyzing F1 Data with FastF1</h3>
+                        <span class="article-reading-time">6 minute read</span>
+                    </div>
+                    <span class="article-link">Read more →</span>
+                </a>
+
+                <a href="#" class="article-item animate-fade-in stagger-4">
+                    <div>
+                        <div class="article-meta">
+                            <span class="article-category">journal</span>
+                            <span class="article-tags">| career | motorsport</span>
+                        </div>
+                        <h3 class="article-title">The Path to Formula 1 Engineering</h3>
+                        <span class="article-reading-time">10 minute read</span>
+                    </div>
+                    <span class="article-link">Read more →</span>
+                </a>
+            </div>
+
+            <a href="#" class="view-all animate-fade-in">View all articles</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-border-image"></div>
+
+            <div class="footer-top">
+                <span class="footer-location">You are here</span>
+                <span class="footer-version">✷ ver. 01.25</span>
+            </div>
+
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <a href="/">Home</a>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Garage</h4>
+                    <div class="footer-links">
+                        <a href="#projects">
+                            Projects
+                            <span class="footer-link-desc">Engineering work and experiments</span>
+                        </a>
+                        <a href="#publications">
+                            Publications
+                            <span class="footer-link-desc">Research papers and academic work</span>
+                        </a>
+                        <a href="#blog">
+                            Blog / Ideas
+                            <span class="footer-link-desc">Thoughts in progress</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Meta</h4>
+                    <div class="footer-links">
+                        <a href="#about">
+                            About
+                            <span class="footer-link-desc">A portrait of the author</span>
+                        </a>
+                        <a href="#interests">
+                            Interests
+                            <span class="footer-link-desc">What drives me</span>
+                        </a>
+                        <a href="#">
+                            CV
+                            <span class="footer-link-desc">The formal stuff</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Elsewhere</h4>
+                    <div class="footer-elsewhere">
+                        <a href="#">GitHub</a>
+                        <a href="#">LinkedIn</a>
+                        <a href="#">Twitter</a>
+                        <a href="#">Spotify</a>
+                    </div>
+                </div>
+
+                <div class="footer-section footer-contact">
+                    <h4>Contact</h4>
+                    <a href="mailto:hello@example.com">hello@example.com</a>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <span>© 2025 Sudarsana Nerella</span>
+                <span>made with 🏎️ in Blacksburg, Virginia</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ============================================
+        // PRELOADER
+        // ============================================
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('preloader').classList.add('hidden');
+                // Trigger hero animations
+                document.querySelectorAll('.hero-animate').forEach(el => {
+                    el.classList.add('loaded');
+                });
+            }, 800);
+        });
+
+        // ============================================
+        // SCROLL ANIMATIONS
+        // ============================================
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-fade-in, .animate-fade-left, .animate-fade-right, .animate-scale').forEach(el => {
+            observer.observe(el);
+        });
+
+        // ============================================
+        // CURRENT TIME
+        // ============================================
+        function updateTime() {
+            const now = new Date();
+            const options = { hour: 'numeric', minute: '2-digit', hour12: true };
+            document.getElementById('currentTime').textContent = now.toLocaleTimeString('en-US', options);
+        }
+        updateTime();
+        setInterval(updateTime, 60000);
+
+        // ============================================
+        // CUSTOM CURSOR
+        // ============================================
+        const cursorDot = document.getElementById('cursorDot');
+        const cursorRing = document.getElementById('cursorRing');
+
+        let mouseX = 0, mouseY = 0;
+        let ringX = 0, ringY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            
+            cursorDot.style.left = mouseX - 4 + 'px';
+            cursorDot.style.top = mouseY - 4 + 'px';
+        });
+
+        // Smooth ring following
+        function animateRing() {
+            ringX += (mouseX - ringX) * 0.15;
+            ringY += (mouseY - ringY) * 0.15;
+            
+            cursorRing.style.left = ringX - 20 + 'px';
+            cursorRing.style.top = ringY - 20 + 'px';
+            
+            requestAnimationFrame(animateRing);
+        }
+        animateRing();
+
+        // Cursor hover effect on links
+        document.querySelectorAll('a, button').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursorRing.classList.add('hover');
+            });
+            el.addEventListener('mouseleave', () => {
+                cursorRing.classList.remove('hover');
+            });
+        });
+
+        // ============================================
+        // FLOATING PARTICLES
+        // ============================================
+        const particlesContainer = document.getElementById('particles');
+        const particleCount = 30;
+
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.top = Math.random() * 100 + '%';
+            particle.style.animationDuration = (Math.random() * 20 + 10) + 's';
+            particle.style.animationDelay = Math.random() * 5 + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        // Animate particles floating
+        const particles = document.querySelectorAll('.particle');
+        particles.forEach(particle => {
+            let x = parseFloat(particle.style.left);
+            let y = parseFloat(particle.style.top);
+            let vx = (Math.random() - 0.5) * 0.02;
+            let vy = (Math.random() - 0.5) * 0.02;
+
+            function animateParticle() {
+                x += vx;
+                y += vy;
+
+                if (x < 0 || x > 100) vx *= -1;
+                if (y < 0 || y > 100) vy *= -1;
+
+                particle.style.left = x + '%';
+                particle.style.top = y + '%';
+
+                requestAnimationFrame(animateParticle);
+            }
+            animateParticle();
+        });
+
+        // ============================================
+        // SMOOTH SCROLL
+        // ============================================
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
