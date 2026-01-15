@@ -771,8 +771,7 @@
             </p>
 
             <p>
-                Currently, I'm Building my F1 telemetry data and staying 
-                close to the world of motorsport. The goal has always been the same: work on something fast.
+                Currently building something interesting. The goal has always been the same: work on something fast.
             </p>
 
             <p>
@@ -812,8 +811,7 @@
         const quotes = [
             { text: "If everything seems under control, you're not going fast enough.", source: "Mario Andretti" },
             { text: "The racing driver's mind has to have amazing anticipation, coordination, and the feeling of speed.", source: "Ayrton Senna" },
-            { text: "To achieve anything in this game, you must be prepared to dabble in the boundary of disaster.", source: "Stirling Moss" },
-            { text: "You win some, lose some, and wreck some.", source: "Dale Earnhardt" },
+            { text: "To achieve anything in this game, you must be prepared to dabble in the boundary of disaster.", source: "Stirling Moss" }
             { text: "Speed has never killed anyone. Suddenly becoming stationary, that's what gets you.", source: "Jeremy Clarkson" },
             { text: "Once something is a passion, the motivation is there.", source: "Michael Schumacher" },
             { text: "I am not designed to come second or third. I am designed to win.", source: "Ayrton Senna" },
@@ -861,7 +859,7 @@
             const minutes = now.getMinutes();
             const percentage = ((hours * 60 + minutes) / 1440) * 100;
             document.getElementById('timePoint').style.left = percentage + '%';
-            document.getElementById('timeIcon').textContent = (hours >= 6 && hours < 18) ? '☀️' : '🌙';
+            document.getElementById('timeIcon').textContent = (hours >= 6 && hours < 18) ? '🔆' : '💤';
         }
         updateTimeTrack();
         setInterval(updateTimeTrack, 60000);
@@ -953,14 +951,14 @@
 
         // Floating Work Card visibility
         const floatingWork = document.getElementById('floatingWork');
-        let lastScrollY = 0;
+        let lastScrollY = 1;
         
         window.addEventListener('scroll', () => {
             const scrollY = window.scrollY;
             const heroHeight = document.querySelector('.hero').offsetHeight;
             
             // Show after scrolling past hero, hide when scrolling back up to top
-            if (scrollY > heroHeight * 0.5) {
+            if (scrollY > heroHeight * 0.8) {
                 floatingWork.classList.add('visible');
             } else {
                 floatingWork.classList.remove('visible');
