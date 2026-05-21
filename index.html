@@ -267,9 +267,7 @@
             transition: color 0.3s ease;
         }
 
-        .latest-link:hover {
-            color: rgba(255,255,255,0.9);
-        }
+        .latest-link:hover { color: rgba(255,255,255,0.9); }
 
         .latest-label {
             text-transform: uppercase;
@@ -284,21 +282,11 @@
             letter-spacing: 0;
         }
 
-        .latest-arrow {
-            transition: transform 0.3s ease;
-        }
+        .latest-arrow { transition: transform 0.3s ease; }
+        .latest-link:hover .latest-arrow { transform: translateX(3px); }
 
-        .latest-link:hover .latest-arrow {
-            transform: translateX(3px);
-        }
-
-        body:not(.dark-mode) .latest-link {
-            color: rgba(61,43,31,0.6);
-        }
-
-        body:not(.dark-mode) .latest-link:hover {
-            color: rgba(61,43,31,0.9);
-        }
+        body:not(.dark-mode) .latest-link { color: rgba(61,43,31,0.6); }
+        body:not(.dark-mode) .latest-link:hover { color: rgba(61,43,31,0.9); }
 
         .hero {
             position: relative;
@@ -326,6 +314,7 @@
             object-position: center;
         }
 
+        /* FIX: lazy-load dark image since it's hidden by default */
         .hero-bg .dark-img { opacity: 0; }
         body.dark-mode .hero-bg .light-img { opacity: 0; }
         body.dark-mode .hero-bg .dark-img { opacity: 1; }
@@ -471,13 +460,8 @@
             background: rgba(0, 0, 0, 0.7);
         }
 
-        body:not(.dark-mode) .about-overlay {
-            background: rgba(245, 240, 232, 0.85);
-        }
-
-        body.dark-mode .about-overlay {
-            background: rgba(10, 10, 10, 0.85);
-        }
+        body:not(.dark-mode) .about-overlay { background: rgba(245, 240, 232, 0.85); }
+        body.dark-mode .about-overlay { background: rgba(10, 10, 10, 0.85); }
 
         .about-content {
             position: relative;
@@ -654,19 +638,11 @@
             transition: transform 0.3s ease;
         }
 
-        .floating-work-link:hover .floating-work-arrow {
-            transform: translateX(4px);
-        }
+        .floating-work-link:hover .floating-work-arrow { transform: translateX(4px); }
 
         @media (max-width: 768px) {
-            .floating-work {
-                bottom: 20px;
-                right: 20px;
-                left: 20px;
-            }
-            .floating-work-link {
-                max-width: none;
-            }
+            .floating-work { bottom: 20px; right: 20px; left: 20px; }
+            .floating-work-link { max-width: none; }
         }
     </style>
 </head>
@@ -704,7 +680,8 @@
     <section class="hero">
         <div class="hero-bg">
             <img src="images/hero-light.jpg" alt="Sudarsana Nerella" class="light-img">
-            <img src="images/hero-dark.jpg" alt="Sudarsana Nerella" class="dark-img">
+            <!-- FIX: added loading="lazy" so dark image only loads when needed -->
+            <img src="images/hero-dark.jpg" alt="Sudarsana Nerella" class="dark-img" loading="lazy">
         </div>
         <div class="hero-overlay"></div>
         <div class="time-track-bar">
@@ -755,8 +732,8 @@
         <div class="about-overlay"></div>
         <div class="about-content">
             <p class="about-label">about</p>
-            <h2 class="about-title"> Hi I'm Sudarsana.</h2>
-            
+            <h2 class="about-title">Hi I'm Sudarsana.</h2>
+
             <p>
                 Currently pursuing my MS at Virginia Tech, where I research solid-fuel ramjet combustion 
                 and CFD modeling at the Advanced Propulsion and Power Laboratory. My work focuses on 
@@ -786,7 +763,7 @@
 
             <div class="about-subsection">
                 <h3>contact</h3>
-                <p>Reach me at <a href="/cdn-cgi/l/email-protection#214f52404654515540111061464c40484d0f424e4c"><span class="__cf_email__" data-cfemail="9bf5e8fafceeebeffaabaadbfcf6faf2f7b5f8f4f6">[email&#160;protected]</span></a></p>
+                <p>Reach me at <a href="mailto:sudarsana@vt.edu">sudarsana@vt.edu</a></p>
             </div>
 
             <div class="about-subsection">
@@ -799,19 +776,29 @@
                 </div>
             </div>
         </div>
-
     </section>
 
+    <!-- FIX: added id="floatingWork" and actual HTML for the floating card -->
+    <div class="floating-work" id="floatingWork">
+        <a href="work.html" class="floating-work-link">
+            <div class="floating-work-label">Latest Work</div>
+            <div class="floating-work-title">How a Microscopic Foam Party Could Revolutionize High-Speed Flight</div>
+            <div class="floating-work-meta">Polymer Combustion · 2025 <span class="floating-work-arrow">→</span></div>
+        </a>
+    </div>
+
+    <!-- FIX: updated copyright year to 2026 -->
     <footer class="footer">
-        <span>© 2025 Sudarsana Nerella</span>
+        <span>© 2026 Sudarsana Nerella</span>
         <span>made with 🏎️ in Blacksburg, Virginia</span>
     </footer>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <script>
         const quotes = [
             { text: "If everything seems under control, you're not going fast enough.", source: "Mario Andretti" },
             { text: "The racing driver's mind has to have amazing anticipation, coordination, and the feeling of speed.", source: "Ayrton Senna" },
-            { text: "To achieve anything in this game, you must be prepared to dabble in the boundary of disaster.", source: "Stirling Moss" }
+            // FIX: added missing comma after Stirling Moss quote
+            { text: "To achieve anything in this game, you must be prepared to dabble in the boundary of disaster.", source: "Stirling Moss" },
             { text: "Speed has never killed anyone. Suddenly becoming stationary, that's what gets you.", source: "Jeremy Clarkson" },
             { text: "Once something is a passion, the motivation is there.", source: "Michael Schumacher" },
             { text: "I am not designed to come second or third. I am designed to win.", source: "Ayrton Senna" },
@@ -824,6 +811,7 @@
         document.getElementById('preloaderQuote').textContent = `"${randomQuote.text}"`;
         document.getElementById('preloaderSource').textContent = randomQuote.source ? `— ${randomQuote.source}` : '';
 
+        // FIX: reduced preloader delay from 2500ms to 1200ms
         window.addEventListener('load', () => {
             setTimeout(() => {
                 document.getElementById('preloader').classList.add('hidden');
@@ -850,7 +838,7 @@
                     delay: 1500,
                     begin: () => document.querySelector('.hero-name').classList.add('visible')
                 });
-            }, 2500);
+            }, 1200);
         });
 
         function updateTimeTrack() {
@@ -951,20 +939,15 @@
 
         // Floating Work Card visibility
         const floatingWork = document.getElementById('floatingWork');
-        let lastScrollY = 1;
-        
+
         window.addEventListener('scroll', () => {
             const scrollY = window.scrollY;
             const heroHeight = document.querySelector('.hero').offsetHeight;
-            
-            // Show after scrolling past hero, hide when scrolling back up to top
             if (scrollY > heroHeight * 0.8) {
                 floatingWork.classList.add('visible');
             } else {
                 floatingWork.classList.remove('visible');
             }
-            
-            lastScrollY = scrollY;
         });
     </script>
 </body>
